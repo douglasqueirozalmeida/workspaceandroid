@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.annotation.RequiresApi
+import org.jetbrains.annotations.NotNull
 import java.io.File
 import java.io.Serializable
 import java.util.*
@@ -15,10 +16,10 @@ import java.util.*
 data class Noticia(
 
         @PrimaryKey(autoGenerate = true) var uid: Int = 0,
-        @ColumnInfo(name = "titulo") var titulo: String = "",
-        @ColumnInfo(name = "dataPublicacao") var dataPublicacao: Date,
-        @ColumnInfo(name = "foto") var foto: String = "",
-        @ColumnInfo(name = "texto") var texto: String = "") : Serializable {
+        @NotNull @ColumnInfo(name = "titulo") var titulo: String = "",
+        @NotNull @ColumnInfo(name = "dataPublicacao") var dataPublicacao: Date,
+        @NotNull @ColumnInfo(name = "texto") var texto: String = "",
+        @ColumnInfo(name = "foto") var foto: String = "") : Serializable {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun converteToBase64(filePath: String): String {
