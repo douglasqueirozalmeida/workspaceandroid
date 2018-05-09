@@ -1,11 +1,14 @@
 package mobile.iesb.br.projetofinal.activitys
 
 import android.arch.persistence.room.Room
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import mobile.iesb.br.projetofinal.R
@@ -26,6 +29,13 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
+        var esqueceuSenha = findViewById<TextView>(R.id.textViewEsqueceuSenha)
+
+        esqueceuSenha.setOnClickListener(View.OnClickListener {
+            val myIntent = Intent(this, EsqueceuSenhaActivity::class.java)
+            startActivity(myIntent)
+        })
 
 //        db = Room.databaseBuilder(
 //                applicationContext,
@@ -50,6 +60,10 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun direnciaEsqueceuSenha(v: View) {
+
     }
 
     private fun cadastraNoticia() {
