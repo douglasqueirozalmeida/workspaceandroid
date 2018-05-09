@@ -1,0 +1,19 @@
+package mobile.iesb.br.projetofinal.dao
+
+import android.arch.persistence.room.*
+import mobile.iesb.br.projetofinal.entidade.Usuario
+
+@Dao
+interface UsuarioDAO {
+    @Insert
+    fun insertUsuario(usuario: Usuario)
+
+    @Update
+    fun alteraUsuario(usuario: Usuario)
+
+    @Delete
+    fun removeUsuario(usuario: Usuario)
+
+    @Query("SELECT * FROM USUARIO")
+    fun findAll(): List<Usuario>
+}
