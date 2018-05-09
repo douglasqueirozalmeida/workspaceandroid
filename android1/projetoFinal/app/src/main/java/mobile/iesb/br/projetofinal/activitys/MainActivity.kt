@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "room-database"
-        ).allowMainThreadQueries().build()
-
-
-        cadastraNoticia()
+//        db = Room.databaseBuilder(
+//                applicationContext,
+//                AppDatabase::class.java, "room-database"
+//        ).allowMainThreadQueries().build()
+//
+//
+//        cadastraNoticia()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
