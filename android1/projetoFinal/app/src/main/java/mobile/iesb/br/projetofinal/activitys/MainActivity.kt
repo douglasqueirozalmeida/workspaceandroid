@@ -7,12 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-
 import kotlinx.android.synthetic.main.activity_main.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Noticia
-import java.time.Duration
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +26,6 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
 
         db = Room.databaseBuilder(
                 applicationContext,
@@ -55,13 +52,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun cadastraNoticia() {
-        db?.noticiaDao()?.insertNoticia(Noticia(0,"Titulo1", Date(),"Descricao Titulo1",""))
-
         var noticias = db?.noticiaDao()?.findAll()
 
-        Toast.makeText(applicationContext,noticias.toString(),Toast.LENGTH_LONG).show()
-//        System.out.print(noticias.toString())
+        if (noticias?.size == 0) {
+
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo1", Date(), "Descricao Titulo1", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo2", Date(), "Descricao Titulo2", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo3", Date(), "Descricao Titulo3", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo4", Date(), "Descricao Titulo4", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo5", Date(), "Descricao Titulo5", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo6", Date(), "Descricao Titulo6", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo7", Date(), "Descricao Titulo7", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo8", Date(), "Descricao Titulo8", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo9", Date(), "Descricao Titulo9", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo10", Date(), "Descricao Titulo10", ""))
+
+            noticias = db?.noticiaDao()?.findAll()
+        }
+
+        noticias = noticias?.sortedByDescending { it.uid }
+
+        Toast.makeText(applicationContext, noticias.toString(), Toast.LENGTH_LONG).show()
+
     }
 }

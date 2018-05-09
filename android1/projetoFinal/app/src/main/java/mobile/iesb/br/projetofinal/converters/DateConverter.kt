@@ -1,6 +1,6 @@
 package mobile.iesb.br.projetofinal.converters
 
-import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverter
 import java.util.*
 
 
