@@ -13,7 +13,6 @@ import java.util.*
 
 @Entity(tableName = "usuario")
 data class Usuario (
-
     @PrimaryKey(autoGenerate = true) var uid: Int = 0,
     @ColumnInfo(name = "nome") var nome: String = "",
     @ColumnInfo(name = "email") var email: String = "",

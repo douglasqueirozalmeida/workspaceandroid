@@ -1,6 +1,5 @@
 package mobile.iesb.br.projetofinal.activitys
 
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -60,10 +59,6 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    fun direnciaEsqueceuSenha(v: View) {
-
     }
 
     private fun cadastraNoticia() {

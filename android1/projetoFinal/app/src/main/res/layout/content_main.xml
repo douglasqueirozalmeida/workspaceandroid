@@ -8,16 +8,19 @@
     tools:context="mobile.iesb.br.projetofinal.activitys.MainActivity"
     tools:showIn="@layout/activity_main">
 
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
+        android:foregroundGravity="top"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
         app:layout_constraintBottom_toTopOf="@+id/editTextSenha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +30,6 @@
         android:id="@+id/editTextSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
@@ -42,7 +44,6 @@
         android:id="@+id/textViewEsqueceuSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Esqueceu Senha?"

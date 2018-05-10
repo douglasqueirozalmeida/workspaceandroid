@@ -2,7 +2,6 @@ package mobile.iesb.br.projetofinal.activitys
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_cadastro.*
 import mobile.iesb.br.projetofinal.R
 
 class EsqueceuSenhaActivity : AppCompatActivity() {
