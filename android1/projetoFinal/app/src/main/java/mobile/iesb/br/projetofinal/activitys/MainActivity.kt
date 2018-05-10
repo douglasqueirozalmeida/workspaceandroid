@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isUsuarioValido(): Boolean {
-        var email = findViewById<EditText>(R.id.editTextEmailRecuperaSenha)
-        var senha = findViewById<EditText>(R.id.editTextSenha)
+        var email = findViewById<EditText>(R.id.editTextEmailLogin)
+        var senha = findViewById<EditText>(R.id.editTextSenhaLogin)
 
         var usuario = db?.usuarioDao()?.findByEmailSenha(email.text.toString(), senha.text.toString())
 
@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun validaInputs(): Boolean {
-        var email = findViewById<EditText>(R.id.editTextEmailRecuperaSenha)
-        var senha = findViewById<EditText>(R.id.editTextSenha)
+        var email = findViewById<EditText>(R.id.editTextEmailLogin)
+        var senha = findViewById<EditText>(R.id.editTextSenhaLogin)
 
         var isEmailValido = ValidaUtil.isEmailValido(email)
         var isSenhaVazia = ValidaUtil.isEmpty(senha)
