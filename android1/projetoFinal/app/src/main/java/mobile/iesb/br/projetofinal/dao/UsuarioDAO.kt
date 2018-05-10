@@ -19,4 +19,7 @@ interface UsuarioDAO {
 
     @Query("SELECT * FROM USUARIO WHERE email like :emailParametro and senha like :senhaParametro")
     fun findByEmailSenha(emailParametro : String, senhaParametro : String) : Usuario
+
+    @Query("SELECT * FROM USUARIO WHERE email like :emailParametro")
+    fun findByEmail(emailParametro : String) : Usuario
 }
