@@ -5,8 +5,8 @@ import android.widget.EditText
 class ValidaUtil {
 
     companion object {
-        fun isEmpty(editText: EditText) : Boolean {
-            if(editText.text == null || editText.text.isEmpty()) {
+        fun isEmpty(editText: EditText): Boolean {
+            if (editText.text == null || editText.text.isEmpty()) {
 //                editText.requestFocus()
                 editText.setError(editText.hint.toString() + " Inválido")
 
@@ -16,9 +16,9 @@ class ValidaUtil {
             return false
         }
 
-        fun isEmailValido(editText: EditText) : Boolean {
-            if(!this.isEmpty(editText)) {
-                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(editText.text).matches()) {
+        fun isEmailValido(editText: EditText): Boolean {
+            if (!this.isEmpty(editText)) {
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(editText.text).matches()) {
 //                    editText.requestFocus()
                     editText.setError(editText.hint.toString() + " Inválido")
                 } else {
@@ -29,9 +29,17 @@ class ValidaUtil {
             return false
         }
 
-        fun isPasswordValido(editText: EditText) : Boolean {
-            if(editText.text.length >= 6) {
-                return true
+        fun isPasswordValido(editText: EditText): Boolean {
+            if (!this.isEmpty(editText) && editText.text.length >= 6) {
+                if (editText.text.matches(Regex("[A-Za-z0-9]*"))) {
+                    editText.setError(editText.hint.toString() + " Inválida, Deve possuir um caracter especial")
+                } else if (!editText.text.matches(Regex("^.*?[A-Z].*"))) {
+                    editText.setError(editText.hint.toString() + " Inválida, Deve possuir um caracter maiúsculo")
+                } else if (!editText.text.matches(Regex("^.*?[0-9].*"))) {
+                    editText.setError(editText.hint.toString() + " Inválida, Deve possuir um número")
+                } else {
+                    return true
+                }
             } else {
 //                editText.requestFocus()
                 editText.setError(editText.hint.toString() + " Inválida, Minimo 6 caracteres")
@@ -40,11 +48,6 @@ class ValidaUtil {
             return false
         }
     }
-
-
-
-
-
 
 
 }

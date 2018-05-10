@@ -3,11 +3,9 @@ package mobile.iesb.br.projetofinal.activitys
 import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -29,26 +27,26 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val myIntent = Intent(this, CadastroActivity::class.java)
+            startActivity(myIntent)
         }
 
         var esqueceuSenha = findViewById<TextView>(R.id.textViewEsqueceuSenha)
 
-        esqueceuSenha.setOnClickListener(View.OnClickListener {
+        esqueceuSenha.setOnClickListener{ view ->
             val myIntent = Intent(this, EsqueceuSenhaActivity::class.java)
             startActivity(myIntent)
-        })
+        }
 
 
         var botaoEntrar = findViewById<TextView>(R.id.buttonEntrar)
 
-        botaoEntrar.setOnClickListener(View.OnClickListener {
-            if(validaInputs() && isUsuarioValido()) {
+        botaoEntrar.setOnClickListener { view ->
+            if (validaInputs() && isUsuarioValido()) {
                 val myIntent = Intent(this, HomeActivity::class.java)
                 startActivity(myIntent)
             }
-        })
+        }
 
         db = Room.databaseBuilder(
                 applicationContext,
@@ -57,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 //
 //
 //        cadastraNoticia()
-//        cadastraUsuario()
+        cadastraUsuario()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -77,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isUsuarioValido() : Boolean {
-        var email = findViewById<EditText>(R.id.editTextEmail)
+        var email = findViewById<EditText>(R.id.editTextEmailRecuperaSenha)
         var senha = findViewById<EditText>(R.id.editTextSenha)
 
         var usuario = db?.usuarioDao()?.findByEmailSenha(email.text.toString(), senha.text.toString())
@@ -92,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun validaInputs() : Boolean {
-        var email = findViewById<EditText>(R.id.editTextEmail)
+        var email = findViewById<EditText>(R.id.editTextEmailRecuperaSenha)
         var senha = findViewById<EditText>(R.id.editTextSenha)
 
         var isEmailValido = ValidaUtil.isEmailValido(email)
@@ -102,7 +100,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cadastraUsuario() {
-        db?.usuarioDao()?.insertUsuario(Usuario(0, "Everton", "Everton@gmail.com", "", "1234", 123456, 6199999999))
+        var email = "admin@admin.com"
+        var senha = "senha"
+        var usuarioAdmin = db?.usuarioDao()?.findByEmailSenha(email,senha)
+
+        if(usuarioAdmin == null) {
+            db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", email, "", senha, 0, 6199999999))
+        }
     }
 
     private fun cadastraNoticia() {

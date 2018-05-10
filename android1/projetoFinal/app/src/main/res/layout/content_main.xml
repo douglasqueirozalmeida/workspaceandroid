@@ -10,7 +10,7 @@
 
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextEmailRecuperaSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewEsqueceuSenha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailRecuperaSenha" />
 
     <TextView
         android:id="@+id/textViewEsqueceuSenha"
