@@ -25,6 +25,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activitys.EsqueceuSenhaActivity" />
         <activity android:name=".activitys.HomeActivity" />
+        <activity android:name=".activitys.DetalhaNoticiaActivity"/>
         <activity android:name=".activitys.CadastroActivity" />
     </application>
 
