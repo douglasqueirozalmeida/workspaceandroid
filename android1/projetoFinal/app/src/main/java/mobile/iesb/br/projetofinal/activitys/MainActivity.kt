@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 //
 //
 //        cadastraNoticia()
-//        cadastraUsuario()
+        cadastraUsuario()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -100,7 +100,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cadastraUsuario() {
-        db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", "admin@admin.com", "", "admin", 0, 6199999999))
+        var email = "admin@admin.com"
+        var senha = "senha"
+        var usuarioAdmin = db?.usuarioDao()?.findByEmailSenha(email,senha)
+
+        if(usuarioAdmin == null) {
+            db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", email, "", senha, 0, 6199999999))
+        }
     }
 
     private fun cadastraNoticia() {

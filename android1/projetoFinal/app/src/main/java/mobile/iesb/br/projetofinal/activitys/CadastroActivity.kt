@@ -10,6 +10,9 @@ class CadastroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
 //        setSupportActionBar(toolbar)
+
+//        ValidaUtil.isEmailValido()
+//        ValidaUtil.isPasswordValido()
     }
 
 }
