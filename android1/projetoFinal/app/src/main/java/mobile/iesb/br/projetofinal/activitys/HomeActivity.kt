@@ -12,7 +12,6 @@ import android.widget.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Noticia
-import java.text.SimpleDateFormat
 
 class HomeActivity : AppCompatActivity() {
 
@@ -30,7 +29,7 @@ class HomeActivity : AppCompatActivity() {
         var noticias = db?.noticiaDao()?.findAll()
         noticias = noticias?.sortedByDescending { it.uid }
 
-        val listView = findViewById<ListView>(R.id.listaNoticia)
+        val listView = findViewById<ListView>(R.id.listNoticias)
         listView.adapter = NoticiaListAdapter(this, noticias!!)
         listView.onItemClickListener = AdapterView.OnItemClickListener { adapterView, view, position, id ->
             val myIntent = Intent(this, DetalhaNoticiaActivity::class.java)
@@ -40,8 +39,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     public override fun onDestroy() {
-
-
         super.onDestroy()
     }
 }
@@ -70,7 +67,7 @@ private class NoticiaListAdapter(paramContexto: Context, paramNoticias: List<Not
 
     override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
         val layoutInflater = LayoutInflater.from(contexto)
-        val noticiaRow = layoutInflater.inflate(R.layout.row_noticias, viewGroup,false)
+        val noticiaRow = layoutInflater.inflate(R.layout.content_home, viewGroup,false)
 
         val tituloTextView = noticiaRow.findViewById<TextView>(R.id.textViewTituloNoticia)
         tituloTextView.text = noticias.get(position).titulo
