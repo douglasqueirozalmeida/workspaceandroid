@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         var senha = findViewById<EditText>(R.id.editTextSenha)
 
         var isEmailValido = ValidaUtil.isEmailValido(email)
-        var isSenhaValido = ValidaUtil.isPasswordValido(senha)
+        var isSenhaValido = ValidaUtil.isEmpty(senha)
 
         return isEmailValido && isSenhaValido
     }
