@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Noticia
+import mobile.iesb.br.projetofinal.util.ValidaUtil
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +36,16 @@ class MainActivity : AppCompatActivity() {
         esqueceuSenha.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this, EsqueceuSenhaActivity::class.java)
             startActivity(myIntent)
+        })
+
+
+        var botaoEntrar = findViewById<TextView>(R.id.buttonEntrar)
+
+        botaoEntrar.setOnClickListener(View.OnClickListener {
+            if(validaInputs()) {
+                val myIntent = Intent(this, HomeActivity::class.java)
+                startActivity(myIntent)
+            }
         })
 
 //        db = Room.databaseBuilder(
@@ -59,6 +71,13 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun validaInputs() : Boolean {
+        var email = findViewById<EditText>(R.id.editTextEmail)
+        var senha = findViewById<EditText>(R.id.editTextSenha)
+
+        return (!ValidaUtil.isEmpty(email) && !ValidaUtil.isEmpty(senha) && ValidaUtil.isEmailValido(email) && ValidaUtil.isPasswordValido(senha))
     }
 
     private fun cadastraNoticia() {

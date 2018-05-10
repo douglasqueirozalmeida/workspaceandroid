@@ -24,6 +24,7 @@
             android:label="Aluno Online"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activitys.EsqueceuSenhaActivity" />
+        <activity android:name=".activitys.HomeActivity" />
     </application>
 
 </manifest>
