@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         var botaoEntrar = findViewById<TextView>(R.id.buttonEntrar)
 
         botaoEntrar.setOnClickListener(View.OnClickListener {
-            if(validaInputs()) {
+            if(validaInputs() && isUsuarioValido()) {
                 val myIntent = Intent(this, HomeActivity::class.java)
                 startActivity(myIntent)
             }
@@ -73,11 +73,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun isUsuarioValido() : Boolean {
+        var email = findViewById<EditText>(R.id.editTextEmail)
+        var senha = findViewById<EditText>(R.id.editTextSenha)
+
+        var usuario = db?.usuarioDao()?.findByEmailSenha(email.text.toString(), senha.text.toString())
+
+        if(usuario == null) {
+
+            Toast.makeText(applicationContext, "Dados Incorretos", Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        return true
+    }
+
     private fun validaInputs() : Boolean {
         var email = findViewById<EditText>(R.id.editTextEmail)
         var senha = findViewById<EditText>(R.id.editTextSenha)
 
-        return (!ValidaUtil.isEmpty(email) && !ValidaUtil.isEmpty(senha) && ValidaUtil.isEmailValido(email) && ValidaUtil.isPasswordValido(senha))
+        var isEmailValido = ValidaUtil.isEmailValido(email)
+        var isSenhaValido = ValidaUtil.isPasswordValido(senha)
+
+        return isEmailValido && isSenhaValido
     }
 
     private fun cadastraNoticia() {
