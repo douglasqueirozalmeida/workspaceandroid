@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi
 import org.jetbrains.annotations.NotNull
 import java.io.File
 import java.io.Serializable
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Entity(tableName = "noticia")
@@ -36,8 +37,16 @@ data class Noticia(
     }
 
 
-    fun retornaBitMapImage(): Bitmap {
+    fun retornaBitMapImage(): Bitmap? {
         var bytes = android.util.Base64.decode(foto, android.util.Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        if(bytes != null){
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        }
+        return null
+    }
+
+    fun getDataString(): String? {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        return sdf.format(dataPublicacao)
     }
 }

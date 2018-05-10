@@ -1,5 +1,6 @@
 package mobile.iesb.br.projetofinal.activitys
 
+import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Noticia
+import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
 import java.util.*
 
@@ -48,13 +50,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-//        db = Room.databaseBuilder(
-//                applicationContext,
-//                AppDatabase::class.java, "room-database"
-//        ).allowMainThreadQueries().build()
+        db = Room.databaseBuilder(
+                applicationContext,
+                AppDatabase::class.java, "room-database"
+        ).allowMainThreadQueries().build()
 //
 //
 //        cadastraNoticia()
+//        cadastraUsuario()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -93,9 +96,13 @@ class MainActivity : AppCompatActivity() {
         var senha = findViewById<EditText>(R.id.editTextSenha)
 
         var isEmailValido = ValidaUtil.isEmailValido(email)
-        var isSenhaValido = ValidaUtil.isEmpty(senha)
+        var isSenhaVazia = ValidaUtil.isEmpty(senha)
 
-        return isEmailValido && isSenhaValido
+        return isEmailValido && !isSenhaVazia
+    }
+
+    private fun cadastraUsuario() {
+        db?.usuarioDao()?.insertUsuario(Usuario(0, "Everton", "Everton@gmail.com", "", "1234", 123456, 6199999999))
     }
 
     private fun cadastraNoticia() {
