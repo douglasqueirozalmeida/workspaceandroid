@@ -2,9 +2,13 @@ package mobile.iesb.br.projetofinal.activitys
 
 import android.arch.persistence.room.Room
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,11 +16,18 @@ import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
+import java.io.File
+import java.util.*
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import java.io.ByteArrayOutputStream
+
 
 class MainActivity : AppCompatActivity() {
 
     var db: AppDatabase? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -77,15 +88,27 @@ class MainActivity : AppCompatActivity() {
         return isEmailValido && !isSenhaVazia
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun cadastraUsuario() {
         var email = "admin@admin.com"
         var senha = "senha"
         var usuarioAdmin = db?.usuarioDao()?.findByEmailSenha(email, senha)
 
         if (usuarioAdmin == null) {
-            db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", email, "", senha, 0, 6199999999))
+            db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", email, getImagem(), senha, 0, 6199999999))
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getImagem(): String{
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+        val base64 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+        bitmap.recycle()
+        return base64
+    }
+
 
 
 }

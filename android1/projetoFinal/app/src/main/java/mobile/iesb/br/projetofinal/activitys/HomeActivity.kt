@@ -3,19 +3,26 @@ package mobile.iesb.br.projetofinal.activitys
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Noticia
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
     var db: AppDatabase? = null
+    val TEXTO = "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -59,27 +66,39 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun cadastraNoticia(): List<Noticia>? {
         var noticias = db?.noticiaDao()?.findAll()
 
         if (noticias?.size == 0) {
 
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo1", Date(), "Descricao Titulo1", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo2", Date(), "Descricao Titulo2", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo3", Date(), "Descricao Titulo3", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo4", Date(), "Descricao Titulo4", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo5", Date(), "Descricao Titulo5", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo6", Date(), "Descricao Titulo6", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo7", Date(), "Descricao Titulo7", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo8", Date(), "Descricao Titulo8", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo9", Date(), "Descricao Titulo9", ""))
-            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo10", Date(), "Descricao Titulo10", ""))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo1", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo2", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo3", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo4", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo5", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo6", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo7", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo8", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo9", Date(), TEXTO, getImagem()))
+            db?.noticiaDao()?.insertNoticia(Noticia(0, "Titulo10", Date(), TEXTO, getImagem()))
 
             noticias = db?.noticiaDao()?.findAll()
         }
 
         return noticias?.sortedByDescending { it.uid }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getImagem(): String{
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.noticia)
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+        val base64 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+        bitmap.recycle()
+        return base64
+    }
+
 }
 
 private class NoticiaListAdapter(paramContexto: Context, paramNoticias: List<Noticia>) : BaseAdapter() {
