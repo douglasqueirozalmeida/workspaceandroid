@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun cadastraUsuario() {
         var email = "admin@admin.com"
-        var senha = "senha"
+        var senha = "admin"
         var usuarioAdmin = db?.usuarioDao()?.findByEmailSenha(email, senha)
 
         if (usuarioAdmin == null) {
