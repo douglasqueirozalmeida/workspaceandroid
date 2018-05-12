@@ -43,7 +43,6 @@ class HomeActivity : AppCompatActivity() {
             startActivity(myIntent)
         }
 
-
     }
 
     public override fun onDestroy() {
@@ -61,8 +60,14 @@ class HomeActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+            R.id.editarPerfil -> {
+                val myIntent = Intent(this, EditarPerfilActivity::class.java)
+                startActivity(myIntent)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 

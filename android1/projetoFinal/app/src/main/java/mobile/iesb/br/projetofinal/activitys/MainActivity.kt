@@ -1,6 +1,7 @@
 package mobile.iesb.br.projetofinal.activitys
 
 import android.arch.persistence.room.Room
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var sessao = getSharedPreferences("username", Context.MODE_PRIVATE)
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
@@ -49,7 +52,12 @@ class MainActivity : AppCompatActivity() {
         var botaoEntrar = findViewById<TextView>(R.id.buttonEntrar)
 
         botaoEntrar.setOnClickListener { view ->
-            if (validaInputs() && isUsuarioValido()) {
+            var email = findViewById<EditText>(R.id.editTextEmailLogin)
+            var senha = findViewById<EditText>(R.id.editTextSenhaLogin)
+            if (validaInputs(email, senha) && isUsuarioValido(email, senha)) {
+                var editor = sessao.edit();
+                editor.putString("emailLogin", email.text.toString())
+                editor.commit()
                 val myIntent = Intent(this, HomeActivity::class.java)
                 startActivity(myIntent)
             }
@@ -63,28 +71,18 @@ class MainActivity : AppCompatActivity() {
         cadastraUsuario()
     }
 
-    private fun isUsuarioValido(): Boolean {
-        var email = findViewById<EditText>(R.id.editTextEmailLogin)
-        var senha = findViewById<EditText>(R.id.editTextSenhaLogin)
-
+    private fun isUsuarioValido(email: EditText, senha: EditText): Boolean {
         var usuario = db?.usuarioDao()?.findByEmailSenha(email.text.toString(), senha.text.toString())
-
         if (usuario == null) {
-
             Toast.makeText(applicationContext, "Dados Incorretos", Toast.LENGTH_LONG).show()
             return false
         }
-
         return true
     }
 
-    private fun validaInputs(): Boolean {
-        var email = findViewById<EditText>(R.id.editTextEmailLogin)
-        var senha = findViewById<EditText>(R.id.editTextSenhaLogin)
-
+    private fun validaInputs(email: EditText, senha: EditText): Boolean {
         var isEmailValido = ValidaUtil.isEmailValido(email)
         var isSenhaVazia = ValidaUtil.isEmpty(senha)
-
         return isEmailValido && !isSenhaVazia
     }
 

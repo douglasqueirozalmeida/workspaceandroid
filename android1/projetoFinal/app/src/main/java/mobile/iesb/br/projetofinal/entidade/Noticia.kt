@@ -11,7 +11,8 @@ import org.jetbrains.annotations.NotNull
 import java.io.File
 import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Base64
 
 @Entity(tableName = "noticia")
 data class Noticia(
