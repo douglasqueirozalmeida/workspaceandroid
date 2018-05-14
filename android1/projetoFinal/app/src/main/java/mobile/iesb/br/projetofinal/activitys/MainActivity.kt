@@ -3,8 +3,6 @@ package mobile.iesb.br.projetofinal.activitys
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -17,7 +15,6 @@ import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
-import java.io.ByteArrayOutputStream
 
 
 class MainActivity : AppCompatActivity() {
@@ -89,19 +86,9 @@ class MainActivity : AppCompatActivity() {
         var usuarioAdmin = db?.usuarioDao()?.findByEmailSenha(email, senha)
 
         if (usuarioAdmin == null) {
-            db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", email, getImagem(), senha, 0, 6199999999))
+            var usuario = Usuario(0, "admin", email, null, senha, 0, 6199999999)
+            usuario.gravaFotoDefault(resources)
+            db?.usuarioDao()?.insertUsuario(usuario)
         }
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getImagem(): String {
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar)
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-        val base64 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
-        bitmap.recycle()
-        return base64
-    }
-
-
 }

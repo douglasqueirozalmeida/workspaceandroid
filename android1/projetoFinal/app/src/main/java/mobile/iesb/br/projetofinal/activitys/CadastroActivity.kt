@@ -1,10 +1,10 @@
 package mobile.iesb.br.projetofinal.activitys
 
 import android.arch.persistence.room.Room
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.content_cadastro.*
@@ -17,12 +17,13 @@ class CadastroActivity : AppCompatActivity() {
 
     var db: AppDatabase? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
 
-        buttonCadastrar.setOnClickListener {
-            view ->  cadastraUsuario(view)
+        buttonCadastrar.setOnClickListener { view ->
+            cadastraUsuario()
         }
 
         db = Room.databaseBuilder(
@@ -31,13 +32,14 @@ class CadastroActivity : AppCompatActivity() {
         ).allowMainThreadQueries().build()
     }
 
-    fun cadastraUsuario(view: View) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun cadastraUsuario() {
         var email = findViewById<EditText>(R.id.editTextEmailCadastro)
         var senha = findViewById<EditText>(R.id.editTextSenhaCadastro)
         var senhaConfirmar = findViewById<EditText>(R.id.editTextConfirmaSenhaCadastro)
 
         if (ValidaUtil.isEmailValido(email) && ValidaUtil.isPasswordValido(senha) && ValidaUtil.isPasswordValido(senhaConfirmar)) {
-            if(!senha.text.toString().equals(senhaConfirmar.text.toString())) {
+            if (!senha.text.toString().equals(senhaConfirmar.text.toString())) {
                 Toast.makeText(applicationContext, "As senhas não conferem.", Toast.LENGTH_LONG).show()
                 return
             }
@@ -45,7 +47,9 @@ class CadastroActivity : AppCompatActivity() {
             if (this.isEmailExistente()) {
                 Toast.makeText(applicationContext, "Usuário já cadastrado.", Toast.LENGTH_LONG).show()
             } else {
-                db?.usuarioDao()?.insertUsuario(Usuario(0, "admin", email.text.toString(), "", senha.text.toString(), 0, 6199999999))
+                val usuario = Usuario(0, "admin", email.text.toString(), null, senha.text.toString(), 0, 6199999999)
+                usuario.gravaFotoDefault(resources)
+                db?.usuarioDao()?.insertUsuario(usuario)
                 email.text.clear()
                 senha.text.clear()
                 senhaConfirmar.text.clear()

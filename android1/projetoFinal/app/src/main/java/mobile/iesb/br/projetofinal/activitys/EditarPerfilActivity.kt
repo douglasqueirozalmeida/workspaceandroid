@@ -32,18 +32,18 @@ class EditarPerfilActivity : AppCompatActivity() {
     val GALERIA = 1
 
     val GALLERY_REQUEST_CODE = 1
-    val CAMERA_REQUEST_CODE =  2
+    val CAMERA_REQUEST_CODE = 2
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_perfil)
 
-        imageView.setOnClickListener {
+        imageViewEdicao.setOnClickListener {
             showPictureDialog()
         }
 
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             finish()
         }
 
@@ -57,13 +57,13 @@ class EditarPerfilActivity : AppCompatActivity() {
         var email = sessao.getString("emailLogin", " ")
         var usuario = db?.usuarioDao()?.findByEmail(email)
 
-        imageView.setImageBitmap(usuario?.retornaBitMapImage())
+        imageViewEdicao.setImageBitmap(usuario?.retornaBitMapImage()!!)
         textViewEmailUsuario.text = usuario?.email;
         editTextNomeUsuario.setText(usuario?.nome)
         editTextMatricula.setText(usuario?.matricula.toString())
         editTextTelefone.setText(usuario?.telefone.toString())
 
-        buttonAlterar.setOnClickListener{
+        buttonAlterar.setOnClickListener {
             alteraUsuario(usuario)
         }
 
@@ -87,7 +87,7 @@ class EditarPerfilActivity : AppCompatActivity() {
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         if (permission != PackageManager.PERMISSION_GRANTED) {
             makeRequest(Manifest.permission.READ_EXTERNAL_STORAGE, GALLERY_REQUEST_CODE)
-        }else {
+        } else {
             val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
         }
@@ -97,7 +97,7 @@ class EditarPerfilActivity : AppCompatActivity() {
         val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         if (permission != PackageManager.PERMISSION_GRANTED) {
             makeRequest(Manifest.permission.CAMERA, CAMERA_REQUEST_CODE)
-        }else{
+        } else {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, CAMERA_REQUEST_CODE)
         }
@@ -135,22 +135,22 @@ class EditarPerfilActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun alteraUsuario(usuario: Usuario?) {
         var senhaAlterada = true
-        if(editTextSenhaCadastro.text.isEmpty() && editTextConfirmaSenhaCadastro.text.isEmpty()){
+        if (editTextSenhaCadastro.text.isEmpty() && editTextConfirmaSenhaCadastro.text.isEmpty()) {
             senhaAlterada = false
         }
-        if(senhaAlterada){
-            if(ValidaUtil.isPasswordValido(editTextSenhaCadastro) && ValidaUtil.isPasswordValido(editTextConfirmaSenhaCadastro)) {
+        if (senhaAlterada) {
+            if (ValidaUtil.isPasswordValido(editTextSenhaCadastro) && ValidaUtil.isPasswordValido(editTextConfirmaSenhaCadastro)) {
                 if (!editTextSenhaCadastro.text.toString().equals(editTextConfirmaSenhaCadastro.text.toString())) {
                     Toast.makeText(applicationContext, "As senhas não conferem.", Toast.LENGTH_LONG).show()
                     return
-                }else {
+                } else {
                     usuario?.senha = editTextSenhaCadastro.text.toString()
                 }
             }
         }
         usuario?.nome = editTextNomeUsuario.text.toString()
         usuario?.email = textViewEmailUsuario.text.toString()
-        usuario?.foto = imageToBase64(imageView)
+        usuario?.foto = imageToBase64(imageViewEdicao)
         usuario?.matricula = editTextMatricula.text.toString().toLong()
         usuario?.telefone = editTextTelefone.text.toString().toLong()
         db?.usuarioDao()?.alteraUsuario(usuario)
@@ -161,45 +161,24 @@ class EditarPerfilActivity : AppCompatActivity() {
     }
 
 
-    public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GALLERY_REQUEST_CODE) {
             if (data != null) {
                 val contentURI = data!!.data
                 try {
-                    imageView!!.setImageBitmap(MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI))
-                }
-                catch (e: IOException) {
+                    imageViewEdicao!!.setImageBitmap(MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI))
+                } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(this, "Erro ao recuperar imagem!", Toast.LENGTH_SHORT).show()
                 }
             }
-        } else if (requestCode == CAMERA) {
-            imageView!!.setImageBitmap(data!!.extras!!.get("data") as Bitmap)
+        } else if (requestCode == CAMERA_REQUEST_CODE) {
+            imageViewEdicao!!.setImageBitmap(data!!.extras!!.get("data") as Bitmap)
         }
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        when (requestCode) {
-//            CAMERA_REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK && data != null) {
-//                    imageView.setImageBitmap(data.extras.get("data") as Bitmap)
-//                }
-//            }
-//            GALLERY_REQUEST_CODE -> {
-//                if (resultCode == Activity.RESULT_OK && data != null) {
-//                    imageView.setImageBitmap(data.extras.get("data") as Bitmap)
-//                }
-//            }
-//            else -> {
-//                Toast.makeText(this, "Comando não conhecido", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
-    fun abrirCamera(abreCamera:Intent){
+    fun abrirCamera(abreCamera: Intent) {
         startActivityForResult(abreCamera, CAMERA_REQUEST_CODE)
     }
 
