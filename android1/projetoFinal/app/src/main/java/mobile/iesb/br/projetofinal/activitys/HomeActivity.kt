@@ -71,6 +71,10 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(myIntent)
                 true
             }
+            R.id.sair -> {
+                finish()
+                true
+            }
             else -> {
                 super.onOptionsItemSelected(item)
             }
@@ -177,7 +181,7 @@ class CustomPagerAdapter(val context: Context, val resources: IntArray) : PagerA
 
 
     override fun instantiateItem(container: ViewGroup?, position: Int): Any {
-        var itemView: View = mLayoutInflater.inflate(R.layout.pager_item, container, false)
+        var itemView: View = mLayoutInflater.inflate(R.layout.content_pager_item, container, false)
 
         var imageView: ImageView = itemView.findViewById(R.id.imageViewPageItem) as ImageView
         imageView.setImageResource(mResources[position])
