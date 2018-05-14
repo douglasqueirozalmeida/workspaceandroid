@@ -3,13 +3,13 @@ package mobile.iesb.br.projetofinal.activitys
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,10 +17,6 @@ import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
-import java.io.File
-import java.util.*
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
 import java.io.ByteArrayOutputStream
 
 
@@ -98,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getImagem(): String{
+    fun getImagem(): String {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.avatar)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
@@ -106,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         bitmap.recycle()
         return base64
     }
-
 
 
 }

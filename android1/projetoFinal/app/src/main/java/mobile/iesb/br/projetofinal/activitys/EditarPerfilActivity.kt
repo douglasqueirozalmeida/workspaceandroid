@@ -17,11 +17,11 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.content_editar_perfil.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
-import mobile.iesb.br.projetofinal.util.ValidaUtil
-import kotlinx.android.synthetic.main.content_editar_perfil.*;
 import mobile.iesb.br.projetofinal.entidade.Usuario
+import mobile.iesb.br.projetofinal.util.ValidaUtil
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 

@@ -12,17 +12,17 @@ import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "usuario")
-data class Usuario (
-    @PrimaryKey(autoGenerate = true) var uid: Int = 0,
-    @ColumnInfo(name = "nome") var nome: String = "",
-    @ColumnInfo(name = "email") var email: String = "",
-    @ColumnInfo(name = "foto") var foto: String = "",
-    @ColumnInfo(name = "senha") var senha: String = "",
-    @ColumnInfo(name = "matricula") var matricula: Long = 0,
-    @ColumnInfo(name = "telefone") var telefone: Long = 0) : Serializable {
+data class Usuario(
+        @PrimaryKey(autoGenerate = true) var uid: Int = 0,
+        @ColumnInfo(name = "nome") var nome: String = "",
+        @ColumnInfo(name = "email") var email: String = "",
+        @ColumnInfo(name = "foto") var foto: String = "",
+        @ColumnInfo(name = "senha") var senha: String = "",
+        @ColumnInfo(name = "matricula") var matricula: Long = 0,
+        @ColumnInfo(name = "telefone") var telefone: Long = 0) : Serializable {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun converteToBase64(filePath: String) : String    {
+    fun converteToBase64(filePath: String): String {
         val bytes = File(filePath).readBytes()
         val base64 = Base64.getEncoder().encodeToString(bytes)
 
@@ -36,8 +36,13 @@ data class Usuario (
     }
 
 
-    fun retornaBitMapImage() : Bitmap {
-        var bytes = android.util.Base64.decode(foto, android.util.Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(bytes,0, bytes.size)
+    fun retornaBitMapImage(): Bitmap? {
+        if (foto != null) {
+            var bytes = android.util.Base64.decode(foto, android.util.Base64.DEFAULT)
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        }
+
+        return null
+
     }
 }
