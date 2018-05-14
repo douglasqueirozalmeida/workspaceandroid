@@ -9,7 +9,7 @@ interface UsuarioDAO {
     fun insertUsuario(usuario: Usuario)
 
     @Update
-    fun alteraUsuario(usuario: Usuario)
+    fun alteraUsuario(usuario: Usuario?)
 
     @Delete
     fun removeUsuario(usuario: Usuario)
