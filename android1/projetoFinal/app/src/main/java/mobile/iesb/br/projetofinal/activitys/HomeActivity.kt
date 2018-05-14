@@ -22,7 +22,11 @@ import java.util.*
 class HomeActivity : AppCompatActivity() {
 
     var db: AppDatabase? = null
-    val TEXTO = "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."
+    val TEXTO = "Em julho de 2011 a JetBrains revelou o Projeto Kotlin, no qual já estava trabalhando há um ano. Dmitry Jemerov disse que a maioria das linguagens não possuiam as características que eles da JetBrains estavam procurando, com exceção da linguagem Scala, no entanto, Dmitry Jemerov citou que o tempo de compilação lenta do Scala era uma deficiência óbvia. Um dos objetivos declarados da Kotlin é compilar tão rápido quanto Java. Em Fevereiro de 2012, a JetBrains abriu o projeto Kotlin sob a Licença Apache de Código aberto. A Jetbrains disse acreditar que a sua nova linguagem irá dirigir as vendas da IntelliJ IDEA.\n" +
+            "\n" +
+            "Kotlin v1.0 foi lançada em 15 de fevereiro de 2016. Este é considerado o primeiro lançamento oficialmente estável e a JetBrains comprometeu-se com a compatibilidade com versões anteriores a partir de esta versão.\n" +
+            "\n" +
+            "No Google I/O 2017, o Google anunciou suporte oficial para o Kotlin no Android."
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +50,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         val mViewPagerAdapter = findViewById<ViewPager>(R.id.pager)
-        var resources = intArrayOf(R.drawable.noticia, R.drawable.noticia)
+        var resources = intArrayOf(R.drawable.noticias_logo, R.drawable.noticia_um, R.drawable.noticia_dois)
 
         mViewPagerAdapter.adapter = CustomPagerAdapter(this, resources)
     }
@@ -106,7 +110,7 @@ class HomeActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getImagem(): String {
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.noticia)
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.noticia_logo)
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
         val base64 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
