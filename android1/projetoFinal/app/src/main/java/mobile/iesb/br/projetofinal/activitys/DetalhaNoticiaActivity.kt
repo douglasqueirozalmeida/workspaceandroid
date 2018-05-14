@@ -1,8 +1,8 @@
 package mobile.iesb.br.projetofinal.activitys
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.method.ScrollingMovementMethod
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +19,7 @@ class DetalhaNoticiaActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tituloNoticia).text = item.titulo
         findViewById<TextView>(R.id.corpoNoticia).text = item.texto
         findViewById<TextView>(R.id.dataNoticia).text = item.getDataString()
+        findViewById<TextView>(R.id.corpoNoticia).movementMethod = ScrollingMovementMethod()
 
 
         var voltar = findViewById<Button>(R.id.buttonVoltar)

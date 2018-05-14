@@ -5,6 +5,12 @@
     android:layout_height="match_parent"
     tools:context="mobile.iesb.br.projetofinal.activitys.DetalhaNoticiaActivity">
 
-    <include layout="@layout/content_detalha_noticia" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/content_detalha_noticia" />
+    </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>
