@@ -8,8 +8,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.*
@@ -48,11 +46,6 @@ class HomeActivity : AppCompatActivity() {
             myIntent.putExtra("itemSelecionado", adapterView.getItemAtPosition(position) as Noticia)
             startActivity(myIntent)
         }
-
-        val mViewPagerAdapter = findViewById<ViewPager>(R.id.pager)
-        var resources = intArrayOf(R.drawable.noticias_logo, R.drawable.noticia_um, R.drawable.noticia_dois)
-
-        mViewPagerAdapter.adapter = CustomPagerAdapter(this, resources)
     }
 
     public override fun onDestroy() {
@@ -60,15 +53,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.editarPerfil -> {
                 val myIntent = Intent(this, EditarPerfilActivity::class.java)
@@ -160,44 +149,4 @@ private class NoticiaListAdapter(paramContexto: Context, paramNoticias: List<Not
 
         return noticiaRow
     }
-}
-
-
-class CustomPagerAdapter(val context: Context, val resources: IntArray) : PagerAdapter() {
-
-    private var mContext: Context
-    private var mLayoutInflater: LayoutInflater
-    private var mResources: IntArray
-
-    init {
-        mContext = context
-        mResources = resources
-        mLayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    }
-
-    override fun isViewFromObject(view: View?, `object`: Any?): Boolean {
-        return view == `object` as LinearLayout
-    }
-
-    override fun getCount(): Int {
-        return mResources.size
-    }
-
-
-    override fun instantiateItem(container: ViewGroup?, position: Int): Any {
-        var itemView: View = mLayoutInflater.inflate(R.layout.content_pager_item, container, false)
-
-        var imageView: ImageView = itemView.findViewById(R.id.imageViewPageItem) as ImageView
-        imageView.setImageResource(mResources[position])
-
-        container?.addView(itemView)
-
-        return itemView
-    }
-
-    override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
-        container?.removeView(`object` as LinearLayout)
-
-    }
-
 }
