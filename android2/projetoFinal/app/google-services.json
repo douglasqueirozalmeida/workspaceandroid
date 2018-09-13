@@ -1,39 +1,35 @@
 {
   "project_info": {
-    "project_number": "932228111035",
-    "firebase_url": "https://projetoandroid-e4164.firebaseio.com",
-    "project_id": "projetoandroid-e4164",
-    "storage_bucket": "projetoandroid-e4164.appspot.com"
+    "project_number": "638902816835",
+    "firebase_url": "https://projetofinalandroid-doug.firebaseio.com",
+    "project_id": "projetofinalandroid-doug",
+    "storage_bucket": "projetofinalandroid-doug.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932228111035:android:011682812897e8da",
+        "mobilesdk_app_id": "1:638902816835:android:011682812897e8da",
         "android_client_info": {
           "package_name": "mobile.iesb.br.projetofinal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "932228111035-ki72u104a0g206d00mqr8mr8bclkh1td.apps.googleusercontent.com",
+          "client_id": "638902816835-9cnku0lc9grt456apfiaq930iq0u6bs0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "mobile.iesb.br.projetofinal",
-            "certificate_hash": "dcfd844a5b9dde48531c3c470b1a9cc9ea461aef"
+            "certificate_hash": "1a0c3c2c3cd9fbcc66a0dd5010ef85a0b6d20c11"
           }
         },
         {
-          "client_id": "932228111035-nrcfddti33bn5c95stno1ceb5km776s4.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "932228111035-nrcfddti33bn5c95stno1ceb5km776s4.apps.googleusercontent.com",
+          "client_id": "638902816835-9fktd0vuqog91jliutk6ol3kegs8klhj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAMxgncQLkbQL97L8XQEgcNBDI6LAeQWMw"
+          "current_key": "AIzaSyCofULZUTCZsjFZhAIJn0BUvhUvWTyW-ns"
         }
       ],
       "services": {
@@ -44,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "932228111035-nrcfddti33bn5c95stno1ceb5km776s4.apps.googleusercontent.com",
+              "client_id": "638902816835-9fktd0vuqog91jliutk6ol3kegs8klhj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

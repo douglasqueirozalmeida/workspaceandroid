@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.android.synthetic.main.activity_main.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.util.ValidaUtil
 
@@ -26,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var sessao = getSharedPreferences("username", Context.MODE_PRIVATE)
-        /*setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
             val myIntent = Intent(this, CadastroActivity::class.java)
             startActivity(myIntent)
-        }*/
+        }
 
         var esqueceuSenha = findViewById<TextView>(R.id.textViewEsqueceuSenha)
 
@@ -48,8 +49,8 @@ class MainActivity : AppCompatActivity() {
             var senha = findViewById<EditText>(R.id.editTextSenhaLogin).text.toString()
 
             mAuth = FirebaseAuth.getInstance()
-            mAuth?.signInWithEmailAndPassword(email, senha)
-                    ?.addOnCompleteListener(this, {task ->
+            mAuth!!.signInWithEmailAndPassword(email, senha)
+                    .addOnCompleteListener(this) {task ->
                         if(!task.isSuccessful) {
                             Toast.makeText(applicationContext, "Dados Incorretos", Toast.LENGTH_LONG).show()
                         }
@@ -65,7 +66,6 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
-            )
 
             /*if (validaInputs(email, senha) && isUsuarioValido(email, senha)) {
                 var editor = sessao.edit();

@@ -7,29 +7,44 @@ import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.content_cadastro.*
 import mobile.iesb.br.projetofinal.R
 import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
 
+import com.google.firebase.auth.FirebaseUser
+
+
+import com.google.firebase.auth.AuthResult
+import com.google.android.gms.tasks.Task
+import android.support.annotation.NonNull
+import com.google.android.gms.tasks.OnCompleteListener
+import android.R.attr.password
+import android.support.v4.app.FragmentActivity
+
+
 class CadastroActivity : AppCompatActivity() {
 
     var db: AppDatabase? = null
+    var mAuth: FirebaseAuth? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
 
+        this.mAuth = FirebaseAuth.getInstance()
+
         buttonCadastrar.setOnClickListener { view ->
             cadastraUsuario()
         }
 
-        db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "room-database"
-        ).allowMainThreadQueries().build()
+//        db = Room.databaseBuilder(
+//                applicationContext,
+//                AppDatabase::class.java, "room-database"
+//        ).allowMainThreadQueries().build()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,19 +59,37 @@ class CadastroActivity : AppCompatActivity() {
                 return
             }
 
-            if (this.isEmailExistente()) {
-                Toast.makeText(applicationContext, "Usuário já cadastrado.", Toast.LENGTH_LONG).show()
-            } else {
-                val usuario = Usuario(0, "admin", email.text.toString(), null, senha.text.toString(), 0, 6199999999)
-                usuario.gravaFotoDefault(resources)
-                db?.usuarioDao()?.insertUsuario(usuario)
-                email.text.clear()
-                senha.text.clear()
-                senhaConfirmar.text.clear()
 
-                Toast.makeText(applicationContext, "Usuário cadastrado!", Toast.LENGTH_LONG).show()
-                finish()
-            }
+
+            var senhaString:String = senha?.text.toString()
+            var emailString:String = email?.text.toString()
+            mAuth!!.createUserWithEmailAndPassword(emailString, senhaString)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+//                            val user = mAuth!!.getCurrentUser()
+                            Toast.makeText(applicationContext, "Usuário cadastrado!", Toast.LENGTH_LONG).show()
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Email já cadastrado.",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
+
+
+//            if (this.isEmailExistente()) {
+//                Toast.makeText(applicationContext, "Usuário já cadastrado.", Toast.LENGTH_LONG).show()
+//            } else {
+//                val usuario = Usuario(0, "admin", email.text.toString(), null, senha.text.toString(), 0, 6199999999)
+//                usuario.gravaFotoDefault(resources)
+//                db?.usuarioDao()?.insertUsuario(usuario)
+//                email.text.clear()
+//                senha.text.clear()
+//                senhaConfirmar.text.clear()
+//
+//                Toast.makeText(applicationContext, "Usuário cadastrado!", Toast.LENGTH_LONG).show()
+//                finish()
+//            }
         }
     }
 
