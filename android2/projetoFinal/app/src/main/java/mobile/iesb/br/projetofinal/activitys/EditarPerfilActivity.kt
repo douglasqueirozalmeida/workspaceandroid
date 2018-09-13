@@ -15,6 +15,8 @@ import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.content_editar_perfil.*
@@ -24,6 +26,13 @@ import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
 
 class EditarPerfilActivity : AppCompatActivity() {
 
@@ -34,10 +43,22 @@ class EditarPerfilActivity : AppCompatActivity() {
     val GALLERY_REQUEST_CODE = 1
     val CAMERA_REQUEST_CODE = 2
 
+    private var mAuth: FirebaseAuth? = null
+    private var currentUser:FirebaseUser? = null;
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        this.currentUser = mAuth?.getCurrentUser()
+//        updateUI(currentUser)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_perfil)
+
+        this.mAuth = FirebaseAuth.getInstance();
 
         imageViewEdicao.setOnClickListener {
             showPictureDialog()
@@ -48,23 +69,45 @@ class EditarPerfilActivity : AppCompatActivity() {
         }
 
 
-        db = Room.databaseBuilder(
-                applicationContext,
-                AppDatabase::class.java, "room-database"
-        ).allowMainThreadQueries().build()
+//        db = Room.databaseBuilder(
+//                applicationContext,
+//                AppDatabase::class.java, "room-database"
+//        ).allowMainThreadQueries().build()
 
-        var sessao = getSharedPreferences("username", Context.MODE_PRIVATE)
-        var email = sessao.getString("emailLogin", " ")
-        var usuario = db?.usuarioDao()?.findByEmail(email)
+//        var sessao = getSharedPreferences("username", Context.MODE_PRIVATE)
+//        var email = sessao.getString("emailLogin", " ")
+//        var usuario = db?.usuarioDao()?.findByEmail(email)
 
-        imageViewEdicao.setImageBitmap(usuario?.retornaBitMapImage()!!)
-        textViewEmailUsuario.text = usuario?.email;
-        editTextNomeUsuario.setText(usuario?.nome)
-        editTextMatricula.setText(usuario?.matricula.toString())
-        editTextTelefone.setText(usuario?.telefone.toString())
+        val usuarioRef = FirebaseDatabase.getInstance().getReference()
+
+        usuarioRef.child("usuarios").orderByChild("email").equalTo(mAuth!!.currentUser!!.email).addValueEventListener(object: ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot){
+
+                for(usuarioSnapshot:DataSnapshot in dataSnapshot.children) {
+//                    edtNomeUsuario.text = Editable.Factory.getInstance().newEditable(usuarioSnapshot.child("nome").value.toString())
+//                    edtMatricula.text = Editable.Factory.getInstance().newEditable(usuarioSnapshot.child("matricula").value.toString())
+//                    edtTelefone.text = Editable.Factory.getInstance().newEditable(usuarioSnapshot.child("telefone").value.toString())
+//                    edtEndereco.text = Editable.Factory.getInstance().newEditable(usuarioSnapshot.child("endereco").value.toString())
+
+//                    key = usuarioSnapshot.key
+                    Log.i("Perfilusuario", "dfdfdfdf")
+//                    carregarImagemPadrao()
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
+//        imageViewEdicao.setImageBitmap(usuario?.retornaBitMapImage()!!)
+//        textViewEmailUsuario.text = usuario?.email;
+//        editTextNomeUsuario.setText(usuario?.nome)
+//        editTextMatricula.setText(usuario?.matricula.toString())
+//        editTextTelefone.setText(usuario?.telefone.toString())
 
         buttonAlterar.setOnClickListener {
-            alteraUsuario(usuario)
+//            alteraUsuario(usuario)
         }
 
     }
