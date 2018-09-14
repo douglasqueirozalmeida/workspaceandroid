@@ -7,9 +7,16 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/listaUsuario"
+        android:orderInCategory="101"
+        android:title="Listar Usuários"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/sair"
-        android:orderInCategory="101"
+        android:orderInCategory="102"
         android:title="@string/sair"
         app:showAsAction="never" />
 </menu>

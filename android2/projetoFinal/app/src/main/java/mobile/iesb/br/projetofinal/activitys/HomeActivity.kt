@@ -61,6 +61,11 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(myIntent)
                 true
             }
+            R.id.listaUsuario -> {
+                val myIntent = Intent(this, ListaUsuarioActivity::class.java)
+                startActivity(myIntent)
+                true
+            }
             R.id.sair -> {
                 finish()
                 true

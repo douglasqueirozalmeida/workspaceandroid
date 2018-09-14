@@ -2,8 +2,6 @@ package mobile.iesb.br.projetofinal.activitys
 
 import android.Manifest
 import android.app.AlertDialog
-import android.arch.persistence.room.Room
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,26 +14,24 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
-import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.content_editar_perfil.*
 import mobile.iesb.br.projetofinal.R
-import mobile.iesb.br.projetofinal.dao.AppDatabase
 import mobile.iesb.br.projetofinal.entidade.Usuario
 import mobile.iesb.br.projetofinal.util.ValidaUtil
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
 import java.util.*
 
 
 class EditarPerfilActivity : AppCompatActivity() {
-
-    var db: AppDatabase? = null
     val CAMERA = 0
     val GALERIA = 1
 
@@ -45,12 +41,12 @@ class EditarPerfilActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     private var currentUser:FirebaseUser? = null
     private var key:String? = null
+    private var pathImage:String? = null
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
+
         this.currentUser = mAuth?.getCurrentUser()
-//        updateUI(currentUser)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -58,7 +54,7 @@ class EditarPerfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_perfil)
 
-        this.mAuth = FirebaseAuth.getInstance();
+        this.mAuth = FirebaseAuth.getInstance()
 
         imageViewEdicao.setOnClickListener {
             showPictureDialog()
@@ -82,8 +78,6 @@ class EditarPerfilActivity : AppCompatActivity() {
 
 
                     key = usuario.key
-
-//                    carregarImagemPadrao()
                 }
 
             }
@@ -205,6 +199,21 @@ class EditarPerfilActivity : AppCompatActivity() {
             val usuarioRef = FirebaseDatabase.getInstance().getReference("/usuarios/${key}")
             usuarioRef.setValue(usuario)
 
+
+//            var storage = FirebaseStorage.getInstance().reference?.child("/fotoPerfil/${key}")
+//
+//            if  (this.pathImage != null) {
+//                val uploadTask = storage?.putFile(Uri.parse(this.pathImage))
+//
+//                uploadTask?.addOnFailureListener { e ->
+//                    Toast.makeText(this, "Não foi possível atualizar a foto do perfil!", Toast.LENGTH_LONG).show()
+//                }?.addOnSuccessListener { taskSnapshot ->
+//                    val downloadUrl = taskSnapshot.uploadSessionUri
+//
+//                }
+//            }
+
+
             Toast.makeText(this, "Usuário alterado com Sucesso", Toast.LENGTH_SHORT).show()
 
         }
@@ -217,6 +226,7 @@ class EditarPerfilActivity : AppCompatActivity() {
             if (data != null) {
                 val contentURI = data!!.data
                 try {
+                    this.pathImage = contentURI.toString()
                     imageViewEdicao!!.setImageBitmap(MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI))
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -224,6 +234,7 @@ class EditarPerfilActivity : AppCompatActivity() {
                 }
             }
         } else if (requestCode == CAMERA_REQUEST_CODE) {
+            this.pathImage = null
             imageViewEdicao!!.setImageBitmap(data!!.extras!!.get("data") as Bitmap)
         }
     }
