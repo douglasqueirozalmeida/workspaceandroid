@@ -67,7 +67,7 @@ class EditarPerfilActivity : AppCompatActivity() {
         var usuarioRef = FirebaseDatabase.getInstance().getReference()
         textViewEmailUsuario.text = this.mAuth!!.currentUser!!.email!!
 
-        usuarioRef.child("usuarios").orderByChild("email").equalTo(mAuth!!.currentUser!!.email).addValueEventListener(object: ValueEventListener {
+        usuarioRef.child("usuarios").orderByChild("email").equalTo(mAuth!!.currentUser!!.email).addListenerForSingleValueEvent(object: ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot){
 
